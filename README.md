@@ -1,5 +1,3 @@
 # movies-explorer-api
 
-# Project layout
-
-https://www.figma.com/file/UnfCNSq8JKslUCFL1z1PK0/Diploma-(Copy)?node-id=891%3A3857&t=q4b71S3LJyFhU2Ib-1
+* Project layout https://www.figma.com/file/UnfCNSq8JKslUCFL1z1PK0/Diploma-(Copy)?node-id=891%3A3857&t=q4b71S3LJyFhU2Ib-1
