@@ -4,6 +4,7 @@ const cookieParse = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 
+const limiter = require('./middlewares/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const centralizedErrorHandler = require('./middlewares/centralized-error-handler');
@@ -20,15 +21,14 @@ const app = express();
 
 app.use(cors);
 app.use(helmet());
+app.use(limiter);
 
 app.use(express.json());
 app.use(express.json({ extended: true }));
 app.use(cookieParse());
 
 // mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb')
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb')
-  .then(() => console.log('Mongoose connected!'))
-  .catch((err) => console.log(`Mongoose connection error ${err}`));
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 // логгер запросов
 app.use(requestLogger);
@@ -39,10 +39,9 @@ app.post('/signin', loginValidation, login);
 
 // нужна авторизация
 app.use(auth);
-// app.post('/logout', logOut);
 app.use('/users', require('./routes/users'));
 app.use('/movies', require('./routes/movies'));
-// app.use('*', require('./routes/not-found-request'));
+
 app.post('/signout', logOut);
 
 // логгер ошибок
