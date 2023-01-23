@@ -19,7 +19,6 @@ module.exports.getOwnInfo = (req, res, next) => {
 // обновляет информация пользователя (имя и/или email)
 module.exports.updateOwnInfo = (req, res, next) => {
   const { name, email } = req.body;
-
   User.findByIdAndUpdate(
     req.user._id,
     { name, email },
@@ -30,6 +29,9 @@ module.exports.updateOwnInfo = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new IncorrectDateError('Переданы некорректные данные при обновлении профиля'));
+      }
+      if (err.code === 11000) {
+        next(new IncorrectEmailError('Данный email уже зарегистрирован'));
       }
       next(err);
     });

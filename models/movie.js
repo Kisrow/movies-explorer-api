@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const { regExpUrl } = require('../middlewares/validate');
+
 const movieSchema = mongoose.Schema({
   country: {
     type: String,
@@ -22,16 +24,34 @@ const movieSchema = mongoose.Schema({
     required: true,
   },
   image: {
-    type: String, // URL
+    type: String,
     required: true,
+    validate: {
+      validator(link) {
+        return regExpUrl.test(link);
+      },
+      message: 'Неправильно указана ссылка',
+    },
   },
   trailerLink: {
-    type: String, // URL
+    type: String,
     required: true,
+    validate: {
+      validator(link) {
+        return regExpUrl.test(link);
+      },
+      message: 'Неправильно указана ссылка',
+    },
   },
   thumbnail: {
-    type: String, // URL
+    type: String,
     required: true,
+    validate: {
+      validator(link) {
+        return regExpUrl.test(link);
+      },
+      message: 'Неправильно указана ссылка',
+    },
   },
   movieId: {
     type: String,

@@ -54,7 +54,6 @@ module.exports.deleteMovie = (req, res, next) => {
     .orFail(() => next(new NotFoundError('Фильм не найден')))
     .then((movie) => {
       if ((JSON.stringify(movie.owner) === JSON.stringify(req.user._id))) {
-        // movie.remove();
         res.send({ message: 'карточка успешно удалена' });
       }
       next(new NotPermissionError('Эта карточка с фильмом не ваша'));

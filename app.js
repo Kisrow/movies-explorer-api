@@ -8,6 +8,10 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const centralizedErrorHandler = require('./middlewares/centralized-error-handler');
 const cors = require('./middlewares/cors');
+const {
+  createMovieValidation,
+  loginValidation,
+} = require('./middlewares/validate');
 
 const { createUser, login, logOut } = require('./controllers/users');
 
@@ -30,10 +34,8 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb')
 app.use(requestLogger);
 
 // авторизация не требуется
-// app.post('/signup', createUserValidation, createUser);
-app.post('/signup', createUser);
-// app.post('/signin', loginValidation, login);
-app.post('/signin', login);
+app.post('/signup', createMovieValidation, createUser);
+app.post('/signin', loginValidation, login);
 
 // нужна авторизация
 app.use(auth);
