@@ -1,16 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParse = require('cookie-parser');
-// const { errors } = require('celebrate');
+const helmet = require('helmet');
+const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const centralizedErrorHandler = require('./middlewares/centralized-error-handler');
+const cors = require('./middlewares/cors');
 
 const { createUser, login, logOut } = require('./controllers/users');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+app.use(cors);
+app.use(helmet());
 
 app.use(express.json());
 app.use(express.json({ extended: true }));
@@ -42,7 +47,7 @@ app.post('/signout', logOut);
 app.use(errorLogger);
 
 // обработчик ошибок celebrate
-// app.use(errors());
+app.use(errors());
 // централизованный обработчик ошибок
 app.use(centralizedErrorHandler);
 
