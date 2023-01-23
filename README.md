@@ -9,7 +9,7 @@ Server part for the project.
 * Helmet
 * Rate limiter
 * Validate
-* Loggers
+* Logs
 * Eslint
 * Joi, celebrate
 
