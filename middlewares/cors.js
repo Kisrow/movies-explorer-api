@@ -1,6 +1,6 @@
 const allowedCors = [
-  'http://kisrow.frontend.nomoredomains.rocks',
-  'https://kisrow.frontend.nomoredomains.rocks',
+  'http://film-collection.nomoredomains.rocks',
+  'https://film-collection.nomoredomains.rocks',
   'http://localhost:3000',
   'http://192.168.1.2:3000',
 ];
