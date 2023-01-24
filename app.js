@@ -21,6 +21,10 @@ const app = express();
 
 app.use(cors);
 app.use(helmet());
+
+// логгер запросов, выше всех запросов и выше мидлваров, на которых запрос может быть отклонен
+app.use(requestLogger);
+
 app.use(limiter);
 
 app.use(express.json());
@@ -29,9 +33,6 @@ app.use(cookieParse());
 
 // mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb')
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
-
-// логгер запросов
-app.use(requestLogger);
 
 // авторизация не требуется
 app.post('/signup', createMovieValidation, createUser);
