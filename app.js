@@ -10,7 +10,7 @@ const auth = require('./middlewares/auth');
 const centralizedErrorHandler = require('./middlewares/centralized-error-handler');
 const cors = require('./middlewares/cors');
 const {
-  createMovieValidation,
+  createUserValidation,
   loginValidation,
 } = require('./middlewares/validate');
 
@@ -32,10 +32,9 @@ app.use(express.json({ extended: true }));
 app.use(cookieParse());
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
-// mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 // авторизация не требуется
-app.post('/signup', createMovieValidation, createUser);
+app.post('/signup', createUserValidation, createUser);
 app.post('/signin', loginValidation, login);
 
 // нужна авторизация
