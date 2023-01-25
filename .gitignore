@@ -34,4 +34,4 @@ yarn-error.log*
 # testing
 /coverage
 
-.env
+*.env
