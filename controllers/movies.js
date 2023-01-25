@@ -50,13 +50,14 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findByIdAndRemove(req.params.movieId)
-    .orFail(() => next(new NotFoundError('Фильм не найден')))
+  Movie.findById(req.params.movieId)
+    .orFail(new NotFoundError('Фильм не найден'))
     .then((movie) => {
-      if ((JSON.stringify(movie.owner) === JSON.stringify(req.user._id))) {
-        res.send({ message: 'карточка успешно удалена' });
+      if (movie.owner === req.user._id) {
+        return movie.remove()
+          .then(() => res.send({ message: 'карточка успешно удалена' }));
       }
-      next(new NotPermissionError('Эта карточка с фильмом не ваша'));
+      throw new NotPermissionError('Эта карточка с фильмом не ваша');
     })
     .catch((err) => {
       if (err.name === 'CastError') {

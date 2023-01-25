@@ -11,7 +11,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 // возвращает email и имя зарегестрированного пользователя
 module.exports.getOwnInfo = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => next(new NotFoundError('Пользователь не найден')))
+    .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => res.send(user))
     .catch(next);
 };
@@ -24,7 +24,7 @@ module.exports.updateOwnInfo = (req, res, next) => {
     { name, email },
     { new: true, runValidators: true },
   )
-    .orFail(() => next(new NotFoundError(`Пользователь ${req.user._id} не найден`)))
+    .orFail(new NotFoundError(`Пользователь ${req.user._id} не найден`))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {

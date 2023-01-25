@@ -8,17 +8,13 @@ const { errors } = require('celebrate');
 
 const limiter = require('./middlewares/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const auth = require('./middlewares/auth');
 const centralizedErrorHandler = require('./middlewares/centralized-error-handler');
 const cors = require('./middlewares/cors');
-const {
-  createUserValidation,
-  loginValidation,
-} = require('./middlewares/validate');
 
-const { createUser, login, logOut } = require('./controllers/users');
+const routerList = require('./routes/index');
+const { MONGOOSE_URL } = require('./constants');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV } = process.env;
 const app = express();
 
 app.use(cors);
@@ -29,22 +25,15 @@ app.use(requestLogger);
 
 app.use(limiter);
 
+// в старых версиях надо устанавливать npm пакет body-parser
 app.use(express.json());
 app.use(express.json({ extended: true }));
 app.use(cookieParse());
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+mongoose.connect(NODE_ENV === 'production' ? MONGOOSE_URL : 'mongodb://localhost:27017/bitfilmsdb');
 
-// авторизация не требуется
-app.post('/signup', createUserValidation, createUser);
-app.post('/signin', loginValidation, login);
-
-// нужна авторизация
-app.use(auth);
-app.use('/users', require('./routes/users'));
-app.use('/movies', require('./routes/movies'));
-
-app.post('/signout', logOut);
+// все роуты в одном файле
+app.use(routerList);
 
 // логгер ошибок
 app.use(errorLogger);

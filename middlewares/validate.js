@@ -12,7 +12,7 @@ const createMovieValidation = celebrate({
     image: Joi.string().required().regex(RegExp(regExpUrl)),
     trailerLink: Joi.string().required().regex(RegExp(regExpUrl)),
     thumbnail: Joi.string().required().regex(RegExp(regExpUrl)),
-    movieId: Joi.string().required(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
@@ -20,7 +20,7 @@ const createMovieValidation = celebrate({
 
 const defineMovieIdValidation = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().alphanum().length(24).required()
+    movieId: Joi.string().length(24).required()
       .hex(),
   }),
 });
@@ -43,7 +43,7 @@ const createUserValidation = celebrate({
 const loginValidation = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().min(6).required(),
+    password: Joi.string().required(),
   }),
 });
 

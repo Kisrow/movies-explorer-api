@@ -7,3 +7,5 @@ exports.ERROR_CODE_DEFAULT = 500;
 
 exports.LIMITER_TIME_MS = 60 * 1000;
 exports.LIMITER_MAX_REQUESTS = 100;
+
+exports.MONGOOSE_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb';
