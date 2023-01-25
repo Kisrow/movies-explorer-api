@@ -13,7 +13,7 @@ const cors = require('./middlewares/cors');
 
 const routerList = require('./routes/index');
 
-const { PORT = 3000, NODE_ENV, MONGOOSE_URL } = process.env;
+const { PORT = 3000, NODE_ENV } = process.env;
 const app = express();
 
 app.use(cors);
@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(express.json({ extended: true }));
 app.use(cookieParse());
 
-mongoose.connect(NODE_ENV === 'production' ? MONGOOSE_URL : 'mongodb://localhost:27017/bitfilmsdb');
+mongoose.connect(NODE_ENV === 'production' ? 'mongodb://127.0.0.1:27017/bitfilmsdb' : 'mongodb://localhost:27017/bitfilmsdb');
 // mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
 
 // все роуты в одном файле
