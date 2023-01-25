@@ -12,7 +12,6 @@ const centralizedErrorHandler = require('./middlewares/centralized-error-handler
 const cors = require('./middlewares/cors');
 
 const routerList = require('./routes/index');
-const { MONGOOSE_URL } = require('./constants');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -31,7 +30,7 @@ app.use(express.json({ extended: true }));
 app.use(cookieParse());
 
 // mongoose.connect(NODE_ENV === 'production' ? MONGOOSE_URL : 'mongodb://localhost:27017/bitfilmsdb');
-mongoose.connect(MONGOOSE_URL);
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 // все роуты в одном файле
 app.use(routerList);
