@@ -83,7 +83,7 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
-        maxAge: 3600 * 24 * 7,
+        maxAge: 3600 * 24 * 7 * 1000,
         httpOnly: true,
         sameSite: true,
       });
